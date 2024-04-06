@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Input Form</title>
+</head>
+<body>
+  <h1>Code Input Form</h1>
+  <div>
+    <label for="code">Enter Your Code:</label><br>
+    <textarea id="code" name="code" rows="10" cols="50"></textarea><br><br>
+    
+    <label for="format">Select Format:</label><br>
+    <select id="format" name="format">
+      <option value="c">C</option>
+      <option value="cpp">C++</option>
+      <option value="py">Python</option>
+      <option value="js">JavaScript</option>
+      <option value="ts">Typescript</option>
+      <option value="go">Golang</option>
+      <option value="rs">Rust</option>
+    </select><br><br>
+
+    <label for="input">Input Data:</label><br>
+    <textarea id="input" name="input" rows="5" cols="50"></textarea><br><br>
+
+    <button id="submit">SUBMIT</button>
+  </div>
+
+  <script>
+    document.getElementById("submit").addEventListener("click", async (event) => {
+      event.preventDefault();
+      const code = document.getElementById("code").value;
+      const format = document.getElementById("format").value;
+      const input = document.getElementById("input").value.concat("\n");
+      const formData = JSON.stringify({ code, format, input });
+      const requestOptions = {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'application/json', // Adjust this if needed
+        },
+      };
+
+      try {
+        const response = await fetch('/submit', requestOptions);
+        await response.json();
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+  </script>
+</body>
+</html>
